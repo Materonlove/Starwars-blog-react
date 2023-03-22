@@ -1,17 +1,16 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
-import { todoActions } from "../store/todos";
 
-const CardPeople = (props) => {
+const CardPlanets = (props) => {
     const { store, actions } = useContext(Context)
-    const [people, setPeople] = useState({})
+    const [planet, setPlanet] = useState({})
     useEffect(() => {
         const cargaDatos = async () => {
-            let { respuestaJson, response } = await actions.useFetch(`/people/${props.uid}`)
+            let { respuestaJson, response } = await actions.useFetch(`/planets/${props.uid}`)
             if (response.ok) {
                 console.log(respuestaJson)
-                setPeople(respuestaJson.result.properties)
+                setPlanet(respuestaJson.result.properties)
             }
         }
         cargaDatos()
@@ -22,19 +21,18 @@ const CardPeople = (props) => {
         <div className="card" style={{ width: "18rem" }}>
             <img src="https://via.placeholder.com/500x500" className="card-img-top" alt="..." />
             <div className="card-body">
-                <h5 className="card-title">{people.name}</h5>
-                 <p className="card-text">Hair_color:{people.hair_color}</p>
-                 <p>Skin_color:{people.skin_color}</p>
-                 
-                
-                <Link to={`/people/${props.uid}`} className="btn btn-primary">Learn More!</Link>
+                <h5 className="card-title">{planet.name}</h5>
+                <p className="card-text">Population:{planet.population}</p>
+                <p>Gravity:{planet.gravity}</p>
+                <Link to={`/planets/${props.uid}`} className="btn btn-primary">Learn More!</Link>
                 <button type="button" className="btn btn-warning"onClick={() => {
                     actions.agregarFavorito({
                         name: props.name,
                         uid: props.uid,
-                        category: "people",
-                        link: `/people/${props.uid}`
+                        category: "planets",
+                        link: `/planets/${props.uid}`
                     })
+                    
                 }}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-heart-fill" viewBox="0 0 16 16">
   <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
@@ -43,9 +41,6 @@ const CardPeople = (props) => {
             </div>
         </div>
     </>)
-    
 }
 
-export default CardPeople;
-
-
+export default CardPlanets;

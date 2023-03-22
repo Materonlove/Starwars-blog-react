@@ -1,6 +1,7 @@
 import { exampleStore, exampleActions } from "./exampleStore.js"; //destructured import
 import { usuarioStore, usuarioActions } from "./usuario.js";
 import { todoStore, todoActions } from "./todos.js";
+import { favoritosStore, favoritosActions } from "./favoritos.js";
 
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
@@ -21,6 +22,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			...exampleStore, //this brings here the variables exampleArray and exampleObject
 			...usuarioStore,
 			...todoStore,
+			...favoritosStore,
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -47,6 +49,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			...exampleActions(getStore, getActions, setStore), //this will brings here the function exampleFunction, and it will be able to use store's states and actions
 			...usuarioActions(getStore, getActions, setStore),
 			...todoActions(getStore, getActions, setStore),
+			...favoritosActions(getStore, getActions, setStore),
 			useFetch: async (endpoint, body, method = "GET") => {
 				let url = process.env.BACKEND_URL + endpoint
 				console.log(url)
@@ -60,6 +63,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				return { respuestaJson, response }
 
+			},
+
+			useFetchParalelo: (endpoint, body, method = "GET") => {
+				let url = process.env.BACKEND_URL + endpoint
+				console.log(url)
+				let response = fetch(url, {
+					method: method,
+					headers: { "Content-Type": "application/json" },
+					body: body ? JSON.stringify(body) : null
+				})
+
+				return response;
 			},
 		}
 	};
