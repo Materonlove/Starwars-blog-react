@@ -6,12 +6,17 @@ import { todoActions } from "../store/todos";
 const CardPeople = (props) => {
     const { store, actions } = useContext(Context)
     const [people, setPeople] = useState({})
+    const [imageURL, setImageURL] = useState("");
     useEffect(() => {
         const cargaDatos = async () => {
             let { respuestaJson, response } = await actions.useFetch(`/people/${props.uid}`)
             if (response.ok) {
                 console.log(respuestaJson)
                 setPeople(respuestaJson.result.properties)
+
+                const id = props.uid.substring(props.uid.lastIndexOf("/") + 1);
+                const imageURL = `https://starwars-visualguide.com/assets/img/characters/${id}.jpg`;
+                setImageURL(imageURL);
             }
         }
         cargaDatos()
@@ -20,7 +25,7 @@ const CardPeople = (props) => {
     }, [props.uid])
     return (<>
         <div className="card" style={{ width: "18rem" }}>
-            <img src="https://via.placeholder.com/500x500" className="card-img-top" alt="..." />
+        <img src={imageURL} className="card-img-top" alt="..." />
             <div className="card-body">
                 <h5 className="card-title">{people.name}</h5>
                  <p className="card-text">Hair_color:{people.hair_color}</p>

@@ -11,6 +11,7 @@ const CardVehicles = (props) => {
             if (response.ok) {
                 console.log(respuestaJson)
                 setVehicle(respuestaJson.result.properties)
+                setVehicleImg(respuestaJson.result.image_url);
             }
         }
         cargaDatos()
@@ -19,7 +20,7 @@ const CardVehicles = (props) => {
     }, [props.uid])
     return (<>
         <div className="card" style={{ width: "18rem" }}>
-            <img src="https://via.placeholder.com/500x500" className="card-img-top" alt="..." />
+            <img src={`https://starwars-visualguide.com/assets/img/vehicles/${props.uid}.jpg`} className="card-img-top" alt="..." />
             <div className="card-body">
                 <h5 className="card-title">{vehicle.name}</h5>
                 <p className="card-text">length:{vehicle.length}</p>
@@ -43,3 +44,4 @@ const CardVehicles = (props) => {
 }
 
 export default CardVehicles;
+

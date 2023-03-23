@@ -72,7 +72,7 @@ console.log(listPeople)
                             return <li>
                                 <li key={index}></li>
                                 {item.hair_color} 
-                                <CardPeople name={item.name} uid={item.uid} hairColor={item.hair_color} />
+                                <CardPeople name={item.name} uid={item.uid} hairColor={item.hair_color} src={"https://starwars-visualguide.com/assets/img/characters/"+item.uid+".jpg"} />
                                 
                             </li>
                         })}
